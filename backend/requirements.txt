@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-multipart
+minio
+Pillow
+python-dotenv
+fastapi-cors
+passlib[bcrypt]
+python-jose

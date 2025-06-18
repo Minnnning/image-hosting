@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # 백엔드 FastAPI 서비스
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app  # 개발 중 코드 변경 시 자동 리로드
+    env_file:
+      - .env
+    depends_on:
+      minio:
+        condition: service_healthy # MinIO가 정상 실행된 후 백엔드 시작
+    networks:
+      - app-network
+
+  # 프론트엔드 React 서비스
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src # 개발 중 코드 변경 시 자동 리로드
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # 이미지 저장을 위한 MinIO 서비스
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"  # API 포트
+      - "9090:9090"  # 웹 콘솔 포트
+    volumes:
+      - minio-data:/data
+      - ./minio-init:/docker-entrypoint-init.d
+    env_file:
+      - .env
+    command: server /data --console-address ":9090"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+volumes:
+  minio-data:
+
+networks:
+  app-network:
+    driver: bridge

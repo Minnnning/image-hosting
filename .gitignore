@@ -1,0 +1,86 @@
+# =========================================
+# 일반 및 환경 설정 파일 (General & Env)
+# =========================================
+# .env 파일과 같은 환경 변수 파일 (가장 중요!)
+.env
+.env.*
+!.env.example
+
+# 로그 파일
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# =========================================
+# React (Frontend)
+# =========================================
+# Node.js 모듈
+/node_modules
+
+# 빌드 결과물
+/build
+/dist
+
+# 테스트 및 커버리지 리포트
+/coverage
+
+# 기타 개발 관련 파일
+.pnp
+.pnp.js
+.npm
+.yarn-integrity
+
+
+# =========================================
+# FastAPI (Backend - Python)
+# =========================================
+# 가상환경 폴더 (가상환경 이름이 venv, .venv, env 등일 경우)
+/venv
+/.venv
+/env
+/ENV
+
+# Python 캐시 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 데이터베이스 파일 (로컬 테스트용)
+*.sqlite3
+
+# uvicorn/gunicorn 로그
+*.log
+
+
+# =========================================
+# MinIO 관련
+# =========================================
+# 로컬 개발 시 사용하는 MinIO 데이터 저장 폴더 (폴더명을 data로 가정)
+# 만약 다른 이름을 사용한다면 그 이름으로 변경해주세요.
+/data/
+/minio_data/
+
+
+# =========================================
+# OS 및 IDE 자동 생성 파일
+# =========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE (VSCode, PyCharm 등)
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
