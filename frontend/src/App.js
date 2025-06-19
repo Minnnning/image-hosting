@@ -121,44 +121,29 @@ function ImageUploader({ token, onLogout }) {
 
   return (
     <div className="container">
-      <h1>📷 이미지 업로드 서비스</h1>
-      <p>FastAPI + React + MinIO with Docker Compose</p>
-
+      <header className="app-header">
+        <h1>📷 이미지 업로드 서비스</h1>
+        <button onClick={onLogout} className="logout-button">로그아웃</button>
+      </header>
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
         <input {...getInputProps()} />
         <p>이미지 파일을 드래그 앤 드롭하거나, 클릭하거나, 페이지에 붙여넣기 하세요.</p>
       </div>
-      
       {message && <p className="message">{message}</p>}
-
-      {/* --- 기능 2: 생성된 HTML 태그를 보여주는 영역 --- */}
       {imageHtml && (
         <div className="html-display-area">
           <h3>HTML 태그</h3>
-          <textarea
-            readOnly
-            value={imageHtml}
-            rows="4"
-          />
+          <textarea readOnly value={imageHtml} rows="4" />
           <button onClick={handleCopyToClipboard}>{copyButtonText}</button>
         </div>
       )}
-
-      <h2>🖼️ 저장된 이미지 목록 (최신순)</h2>
+      <h2>🖼️ 저장된 이미지 목록 (최근 10개)</h2>
       <div className="image-grid">
-        {images.length > 0 ? (
-          images.map((imgUrl, index) => (
-            <div 
-              key={index} 
-              className="image-item"
-              onClick={() => handleImageClick(imgUrl)} // 이미지 클릭 이벤트 추가
-            >
-              <img src={imgUrl} alt={`uploaded-${index}`} />
-            </div>
-          ))
-        ) : (
-          <p>저장된 이미지가 없습니다. 첫 이미지를 업로드 해보세요!</p>
-        )}
+        {images.length > 0 ? images.map((imgUrl) => (
+          <div key={imgUrl} className="image-item" onClick={() => handleImageClick(imgUrl)}>
+            <img src={imgUrl} alt="uploaded" />
+          </div>
+        )) : <p>저장된 이미지가 없습니다.</p>}
       </div>
     </div>
   );
@@ -185,6 +170,5 @@ function App() {
 
   return <ImageUploader token={token} onLogout={handleLogout} />;
 }
-
 
 export default App;

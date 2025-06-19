@@ -16,7 +16,13 @@ from PIL import Image
 # ... (기존 app, CORS, MinIO 설정은 동일) ...
 app = FastAPI()
 origins = [os.getenv("CORS_ORIGIN")]
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+    )
 minio_client = Minio(os.getenv("MINIO_ENDPOINT"), access_key=os.getenv("MINIO_ACCESS_KEY"), secret_key=os.getenv("MINIO_SECRET_KEY"), secure=False)
 bucket_name = os.getenv("MINIO_BUCKET")
 
