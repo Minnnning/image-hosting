@@ -23,7 +23,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
     )
-minio_client = Minio(os.getenv("MINIO_ENDPOINT"), access_key=os.getenv("MINIO_ACCESS_KEY"), secret_key=os.getenv("MINIO_SECRET_KEY"), secure=False)
+minio_client = Minio(
+    os.getenv("MINIO_ENDPOINT"),
+    access_key=os.getenv("MINIO_ACCESS_KEY"),
+    secret_key=os.getenv("MINIO_SECRET_KEY"),
+    secure=False)
 bucket_name = os.getenv("MINIO_BUCKET")
 
 
@@ -50,7 +54,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-# --- [수정] 이미지 업로드 API 보호 ---
 # Depends(get_current_user)를 추가하여 이 API가 보호됨을 명시합니다.
 @app.post("/api/images/upload")
 async def upload_image(file: UploadFile = File(...), current_user: str = Depends(get_current_user)):
@@ -58,7 +61,6 @@ async def upload_image(file: UploadFile = File(...), current_user: str = Depends
     if not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Image file required")
     
-    # ... (기존 파일 저장 로직은 동일) ...
     try:
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
@@ -74,7 +76,7 @@ async def upload_image(file: UploadFile = File(...), current_user: str = Depends
 # --- 이미지 목록 API (보호되지 않음, 누구나 접근 가능) ---
 @app.get("/api/images")
 async def get_image_list():
-    # ... (기존 로직과 동일) ...
+
     try:
         public_endpoint = os.getenv("MINIO_PUBLIC_ENDPOINT")
         objects = minio_client.list_objects(bucket_name, recursive=True)

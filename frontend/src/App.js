@@ -32,7 +32,7 @@ function LoginForm({ onLoginSuccess }) {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>관리자 로그인</h2>
+        <h2>유저 로그인</h2>
         {error && <p className="error-message">{error}</p>}
         <div className="form-group">
           <label htmlFor="username">아이디</label>
@@ -110,19 +110,25 @@ function ImageUploader({ token, onLogout }) {
   }, [handlePaste]);
 
   const handleImageClick = (imageUrl) => {
-    const htmlTag = `<center><img src="${imageUrl}"></center>`;
+    const htmlTag = `<center><img src="${imageUrl}" style="zoom:50%;"></center>`;
     setImageHtml(htmlTag);
     setCopyButtonText('Copy');
   };
+  
+  const tablehtml = `<table><td><center><img alt="" src="" style="zoom:30%;" /></center></td><td><center><img alt="" src="" style="zoom:30%;" /></center></td></table>`;
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(imageHtml).then(() => setCopyButtonText('Copied!'));
   };
 
+  const handleCopyToClipboard2 = () => {
+    navigator.clipboard.writeText(tablehtml).then(() => setCopyButtonText('Copied!'));
+  };
+
   return (
     <div className="container">
       <header className="app-header">
-        <h1>📷 이미지 업로드 서비스</h1>
+        <h1>📷 민미지 업로드</h1>
         <button onClick={onLogout} className="logout-button">로그아웃</button>
       </header>
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
@@ -145,6 +151,11 @@ function ImageUploader({ token, onLogout }) {
           </div>
         )) : <p>저장된 이미지가 없습니다.</p>}
       </div>
+      <div className="html-display-area">
+          <h3>HTML 태그</h3>
+          <textarea readOnly value={tablehtml} rows="4" />
+          <button onClick={handleCopyToClipboard2}>{copyButtonText}</button>
+        </div>
     </div>
   );
 }
