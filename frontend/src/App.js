@@ -152,7 +152,7 @@ function ImageUploader({ token, onLogout }) {
         )) : <p>저장된 이미지가 없습니다.</p>}
       </div>
       <div className="html-display-area">
-          <h3>HTML 태그</h3>
+          <h3>이미지 테이블 HTML 태그</h3>
           <textarea readOnly value={tablehtml} rows="4" />
           <button onClick={handleCopyToClipboard2}>{copyButtonText}</button>
         </div>

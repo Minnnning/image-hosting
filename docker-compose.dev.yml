@@ -6,14 +6,13 @@ services:
     build: ./backend
     ports:
       - "8000:8000"
-    # [수정] 배포 환경에서는 호스트와 코드를 동기화할 필요가 없으므로 volumes를 제거/주석처리 합니다.
-    # volumes:
-    #   - ./backend/app:/app
+    volumes:
+      - ./backend/app:/app  # 개발 중 코드 변경 시 자동 리로드
     env_file:
       - .env
     depends_on:
       minio:
-        condition: service_healthy
+        condition: service_healthy # MinIO가 정상 실행된 후 백엔드 시작
     networks:
       - app-network
 
@@ -21,16 +20,11 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        # .env 파일에 있는 REACT_APP_API_URL 값을
-        # Dockerfile의 빌드 인자(ARG)로 전달합니다.
-        - REACT_APP_API_URL=${REACT_APP_API_URL}
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
-    # [수정] 배포용 이미지는 빌드된 결과물을 포함하므로 실시간 동기화 volumes를 제거/주석처리 합니다.
-    # volumes:
-    #   - ./frontend/src:/app/src
+    volumes:
+      - ./frontend/src:/app/src # 개발 중 코드 변경 시 자동 리로드
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     depends_on:
@@ -38,7 +32,7 @@ services:
     networks:
       - app-network
 
-  # 이미지 저장을 위한 MinIO 서비스 (변경 없음)
+  # 이미지 저장을 위한 MinIO 서비스
   minio:
     image: minio/minio:latest
     ports:
