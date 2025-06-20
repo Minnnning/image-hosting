@@ -1,7 +1,7 @@
 ## 📝 블로그용 간편 이미지 호스팅 서비스
 블로그나 웹사이트에 사용할 이미지를 쉽고 빠르게 업로드하고, HTML 태그까지 한 번에 관리할 수 있는 나만의 이미지 호스팅 솔루션입니다.
-
-
+<center><img src="https://image.minnnningnas.duckdns.org/images/e03d4e48-2042-4e29-bc81-a2a1072bce47.webp" style="zoom:50%;"></center>
+<center><img src="https://image.minnnningnas.duckdns.org/images/3a19d3be-fc15-4652-9dfb-3feecf03cd05.webp" style="zoom:50%;"></center>
 
 ### 🎯 프로젝트 소개 및 목표
 블로그에 글을 작성할 때마다 이미지를 첨부하기 위해 GitHub Issue를 생성하고, 그곳에 업로드된 이미지 주소를 가져와 사용하는 방식을 써왔습니다. 하지만 최근 GitHub 정책상 이슈를 최종적으로 저장(Save)해야만 이미지 주소가 유지되는 등 과정이 번거로워졌습니다.
